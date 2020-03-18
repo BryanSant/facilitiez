@@ -4,7 +4,8 @@
   "description": "A web service for providing office/cubicle/conference room/facilities information about a given physical work site.",
   "main": "app.js",
   "scripts": {
-    "test": "npx jest"
+    "test": "npx jest",
+    "start": "nodejs app.js" 
   },
   "repository": {
     "type": "git",
