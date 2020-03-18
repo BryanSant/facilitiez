@@ -1,0 +1,28 @@
+{
+  "name": "facilitiez",
+  "version": "1.0.0",
+  "description": "A web service for providing office/cubicle/conference room/facilities information about a given physical work site.",
+  "main": "app.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryanSant/facilitiez.git"
+  },
+  "keywords": [
+    "express",
+    "js",
+    "node",
+    "nodejs"
+  ],
+  "author": "Derek Clifford, Bryan Sant",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/BryanSant/facilitiez/issues"
+  },
+  "homepage": "https://github.com/BryanSant/facilitiez#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
