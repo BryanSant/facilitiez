@@ -105,3 +105,6 @@ dist
 
 # Webstorm/vscode
 .idea/
+
+# xlsx files
+seating_chart_xlsx/
