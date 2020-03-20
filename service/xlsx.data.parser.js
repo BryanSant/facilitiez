@@ -100,6 +100,9 @@ function getFriendlyCoordinates(sheet, floorCoordinates, cubicleColumnNames, col
 function getFriendlyColumnIndex(floorCoordinates, cubicleColumnNames, column) {
     let currentColumn = floorCoordinates.startColumn;
     let index = 0;
+    while (!(column in cubicleColumnNames)) {
+        column = incrementLetter(column);
+    }
 
     while (currentColumn !== floorCoordinates.endColumn) {
         if (currentColumn in cubicleColumnNames) {
@@ -122,7 +125,8 @@ function getColumnNameFromIndex(columnNamesWithIndex, index) {
 
 function getMergesForCell(merges, startColumn, startRow) {
     for(const key of Object.keys(merges)) {
-        if (merges[key].s.c === startColumn && merges[key].s.r === startRow) {
+        let actualStartRow = merges[key].s.r + 1;
+        if (merges[key].s.c === startColumn && actualStartRow === startRow) {
             return merges[key];
         }
     }
@@ -143,14 +147,16 @@ function getRoomMapping(sheet, floorCoordinates, roomColumnNames, cubicleColumnN
                 let mergeObject = getMergesForCell(merges, columnIndex, currentRow);
                 if (mergeObject !== undefined) {
                     let mergedColumns = [];
+                    mergedColumns.push(mergeObject.s.c);
                     let currentMergeColumn = mergeObject.s.c;
                     while(currentMergeColumn <= mergeObject.e.c) {
                         let mergedColumnName = getColumnNameFromIndex(columnNamesWithIndex, currentMergeColumn);
-                        if (mergedColumnName !== undefined) {
+                        if (mergedColumnName !== undefined && mergedColumnName in cubicleColumnNames) {
                             mergedColumns.push(mergedColumnName);
                         }
+                        currentMergeColumn++;
                     }
-                    roomWidth = mergedColumns.length
+                    roomWidth = mergedColumns.length;
                 }
                 let coordinates = getFriendlyCoordinates(sheet, floorCoordinates, cubicleColumnNames, key, currentRow);
                 if (cell.v in roomMapping) {
