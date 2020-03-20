@@ -4,7 +4,7 @@ const cubicles = require('../service/cubicles/cubicles');
 module.exports = class CubiclesController {
     async get(req, res) {
         let allCubicles = await parser.GetCubicles();
-        allCubicles = cubicles.PopulateCubicleData(allCubicles);
+        allCubicles = await cubicles.PopulateCubicleData(allCubicles);
         await res.json(allCubicles)
 
     }
@@ -21,7 +21,7 @@ module.exports = class CubiclesController {
 
 async function GetCubicleById(cubicleId) {
     let allCubicles = await parser.GetCubicles();
-    allCubicles = cubicles.PopulateCubicleData(allCubicles);
+    allCubicles = await cubicles.PopulateCubicleData(allCubicles);
     let foundCubicle;
     await allCubicles.forEach((cubicle) => {
         if (cubicle.id === cubicleId) {

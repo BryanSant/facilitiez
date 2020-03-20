@@ -4,6 +4,10 @@ const chgEmailDomain = 'chghealthcare.com';
  * @return {string}
  */
 function GetEmailToForPerson(name) {
+    if (name === undefined || name === '') {
+        return undefined
+    }
+
     let email = getEmailForPerson(name);
     return `mailto:${email}`;
 }

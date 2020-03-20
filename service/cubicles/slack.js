@@ -1,11 +1,15 @@
+const { WebClient } = require('@slack/web-api');
+const client = new WebClient(process.env.SLACK_TOKEN);
+var slackUsers;
+
 const chgSlackUrl = 'https://chgit.slack.com';
 
 /**
  * @return {string}
  */
-function GetSlackUrlForPerson(name) {
-    let slackUsers = getSlackUsers();
-    let slackId = slackUsers[name];
+async function GetSlackUrlForPerson(name) {
+    let slackUsers = await getSlackUsers();
+    let slackId = await getSlackIdByName(slackUsers, name);
 
     // If we don't have a slackId for them, let's return undefined so the UI knows not to display it
     if (slackId === undefined) {
@@ -15,11 +19,22 @@ function GetSlackUrlForPerson(name) {
     return `${chgSlackUrl}/team/${slackId}`;
 }
 
-function getSlackUsers() {
-    return {
-        "Derek Clifford": "UU30XPZQT",
-        "Brian Sant": "UQP58H61W",
+async function getSlackIdByName(slackUsers, name) {
+    let slackId;
+    await slackUsers.members.forEach((member) => {
+        if (member.real_name === name) {
+            slackId = member.id;
+        }
+    });
+
+    return slackId;
+}
+
+async function getSlackUsers() {
+    if (slackUsers === undefined) {
+        slackUsers = await client.users.list({});
     }
+    return slackUsers;
 }
 
 module.exports = {
