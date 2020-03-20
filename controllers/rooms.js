@@ -1,8 +1,10 @@
 const parser = require('../service/xlsx.data.parser');
+const roomsService = require('../service/rooms/rooms');
 
 module.exports = class RoomsController {
     async get(req, res) {
         let allRooms = await parser.GetRooms();
+        allRooms = await roomsService.PopulateRoomData(allRooms);
         await res.json(allRooms)
     }
     async getById(req, res) {
@@ -18,6 +20,7 @@ module.exports = class RoomsController {
 
 async function GetRoomById(roomId) {
     let allRooms = await parser.GetRooms();
+    allRooms = await roomsService.PopulateRoomData(allRooms);
     let foundRoom;
     await allRooms.forEach((room) => {
         if (room.id === roomId) {
