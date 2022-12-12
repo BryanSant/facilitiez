@@ -25,7 +25,7 @@
   "homepage": "https://github.com/BryanSant/facilitiez#readme",
   "dependencies": {
     "@slack/web-api": "^5.8.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "xlsx": "^0.15.6"
   },
   "devDependencies": {
